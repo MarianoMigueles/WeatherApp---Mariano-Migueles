@@ -1,4 +1,4 @@
-package com.example.myweatherapp.Presentation.Weather
+package com.example.myweatherapp.presentation.weather
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,9 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.myweatherapp.Presentation.EventImage
-import com.example.myweatherapp.Presentation.EventText
-import com.example.myweatherapp.Presentation.EventView
+import com.example.myweatherapp.presentation.EventImage
+import com.example.myweatherapp.presentation.EventText
+import com.example.myweatherapp.presentation.EventView
 
 @Composable
 fun WeatherView(
@@ -54,9 +54,9 @@ fun EmptyView() {
 fun ErrorView(message: String) {
     EventView {
         EventImage("error", "Icono de error.")
-        EventText("¡Ha ocurrido un error!")
+        EventText("¡Ha ocurrido un error!", "error")
         Spacer(modifier = Modifier.height(1.dp))
-        Text(message)
+        EventText(message, "error")
     }
 }
 

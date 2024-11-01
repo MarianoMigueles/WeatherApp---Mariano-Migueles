@@ -1,4 +1,4 @@
-package com.example.myweatherapp.Repository
+package com.example.myweatherapp.repository
 
 import io.ktor.client.HttpClient
 

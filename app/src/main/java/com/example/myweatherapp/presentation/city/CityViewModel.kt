@@ -1,4 +1,4 @@
-package com.example.myweatherapp.Presentation.City
+package com.example.myweatherapp.presentation.city
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
 class CityViewModel() : ViewModel() {
-    var state by mutableStateOf<CityState>(CityState.Empty)
+    var state by mutableStateOf<CityState>(CityState.Success(city = City()))
 
     fun execute(intention: CityIntention) {
         when(intention) {

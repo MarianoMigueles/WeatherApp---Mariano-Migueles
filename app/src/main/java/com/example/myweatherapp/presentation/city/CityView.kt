@@ -1,4 +1,4 @@
-package com.example.myweatherapp.Presentation.City
+package com.example.myweatherapp.presentation.city
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,9 +11,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.myweatherapp.Presentation.EventImage
-import com.example.myweatherapp.Presentation.EventText
-import com.example.myweatherapp.Presentation.EventView
+import com.example.myweatherapp.presentation.EventImage
+import com.example.myweatherapp.presentation.EventText
+import com.example.myweatherapp.presentation.EventView
+import com.example.myweatherapp.presentation.PageView
 
 
 @Composable
@@ -48,14 +49,18 @@ fun EmptyView() {
 
 @Composable
 fun SuccessfulView() {
-    Text("Exito al cargar")
+    PageView {
+        Column {
+            Text("Exito")
+        }
+    }
 }
 
 @Composable
 fun ErrorView(message: String) {
     EventView {
         EventImage("error", "Icono de error.")
-        EventText("¡Ha ocurrido un error!")
+        EventText("¡Ha ocurrido un error!", "error")
         Spacer(modifier = Modifier.height(1.dp))
         Text(message)
     }

@@ -1,4 +1,4 @@
-package com.example.myweatherapp.Repository.Models
+package com.example.myweatherapp.repository.models
 
 import kotlinx.serialization.Serializable
 

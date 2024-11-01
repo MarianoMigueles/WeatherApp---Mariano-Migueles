@@ -1,7 +1,7 @@
-package com.example.myweatherapp.Repository
+package com.example.myweatherapp.repository
 
-import com.example.myweatherapp.Presentation.City.City
-import com.example.myweatherapp.Repository.Models.Forecast
+import com.example.myweatherapp.presentation.city.City
+import com.example.myweatherapp.repository.models.Forecast
 
 interface IRepository {
     suspend fun getCity(city: String): List<City>

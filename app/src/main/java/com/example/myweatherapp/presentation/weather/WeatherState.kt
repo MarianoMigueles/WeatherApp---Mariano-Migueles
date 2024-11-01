@@ -1,4 +1,4 @@
-package com.example.myweatherapp.Presentation.Weather
+package com.example.myweatherapp.presentation.weather
 
 sealed class WeatherState {
     data object Empty : WeatherState()

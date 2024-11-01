@@ -1,6 +1,7 @@
-package com.example.myweatherapp.Presentation
+package com.example.myweatherapp.presentation
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
@@ -17,17 +18,16 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.myweatherapp.R
-import com.example.myweatherapp.ui.theme.fontInknutAntiqua
+import com.example.ui.theme.displayFontFamily
 
 @Composable
 fun EventView(content: @Composable () -> Unit) {
-    val modifier: Modifier = Modifier
-
     Column(
-        modifier
-            .fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.secondary),
         verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         content()
     }
@@ -35,11 +35,17 @@ fun EventView(content: @Composable () -> Unit) {
 
 @Composable
 fun EventText(text: String, colorType: String = "default") {
+
+    val colorScheme = when(colorType) {
+        "error" -> MaterialTheme.colorScheme.error
+        else -> MaterialTheme.colorScheme.primary
+    }
+
     Text(
         text,
-        color = MaterialTheme.colorScheme.primary,
-        fontFamily = fontInknutAntiqua,
-        fontSize = MaterialTheme.typography.headlineLarge.fontSize,
+        color = colorScheme,
+        fontFamily = displayFontFamily,
+        fontSize = MaterialTheme.typography.headlineSmall.fontSize,
         fontWeight = MaterialTheme.typography.headlineLarge.fontWeight
     )
 }
