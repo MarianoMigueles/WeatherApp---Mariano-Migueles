@@ -1,10 +1,10 @@
 package com.example.myweatherapp.Repository
 
-import com.example.myweatherapp.Ciudad.Ciudad
+import com.example.myweatherapp.Presentation.City.City
 import com.example.myweatherapp.Repository.Models.Forecast
 
 interface IRepository {
-    suspend fun getCity(city: String): List<Ciudad>
-    suspend fun getWeather(lat: Float, lon: Float): Ciudad
+    suspend fun getCity(city: String): List<City>
+    suspend fun getWeather(lat: Float, lon: Float): City
     suspend fun getForecast(name: String): List<Forecast>
 }

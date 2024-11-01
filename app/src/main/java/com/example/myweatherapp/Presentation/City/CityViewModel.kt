@@ -1,4 +1,4 @@
-package com.example.myweatherapp.Ciudad
+package com.example.myweatherapp.Presentation.City
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

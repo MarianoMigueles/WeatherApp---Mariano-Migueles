@@ -1,4 +1,4 @@
-package com.example.myweatherapp.Ciudad
+package com.example.myweatherapp.Presentation.City
 
 sealed class CityIntention {
     data object Update: CityIntention()

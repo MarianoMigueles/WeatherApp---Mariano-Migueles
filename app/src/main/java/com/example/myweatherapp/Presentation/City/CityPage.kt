@@ -1,18 +1,18 @@
-package com.example.myweatherapp.Clima
+package com.example.myweatherapp.Presentation.City
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun ClimaPage(
+fun CityPage(
     modifier: Modifier = Modifier
 ) {
-    val viewModel : ClimaViewModel = viewModel<ClimaViewModel>()
-    CiudadView(
+    val viewModel : CityViewModel = viewModel<CityViewModel>()
+    CityView(
         modifier = Modifier,
-        estado = viewModel.estado,
+        state = viewModel.state,
     ) {
-        viewModel.Ejecutar(it)
+        viewModel.execute(it)
     }
 }
