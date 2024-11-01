@@ -5,14 +5,14 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun CiudadPage(
+fun CityPage(
     modifier: Modifier = Modifier
 ) {
-    val viewModel : CiudadViewModel = viewModel<CiudadViewModel>()
-    CiudadView(
+    val viewModel : CityViewModel = viewModel<CityViewModel>()
+    CityView(
         modifier = Modifier,
-        estado = viewModel.estado,
+        state = viewModel.state,
     ) {
-        viewModel.ejecutar(it)
+        viewModel.execute(it)
     }
 }
