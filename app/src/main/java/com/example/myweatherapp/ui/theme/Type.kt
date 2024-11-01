@@ -4,7 +4,26 @@ import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.googlefonts.GoogleFont
 import androidx.compose.ui.unit.sp
+import com.example.myweatherapp.R
+import androidx.compose.ui.text.googlefonts.Font
+
+// Google Font Provider
+
+val provider = GoogleFont.Provider(
+    providerAuthority = "com.google.android.gms.fonts",
+    providerPackage = "com.google.android.gms",
+    certificates = R.array.com_google_android_gms_fonts_certs
+)
+
+// Font Family
+
+val inknutAntiqua = GoogleFont("Inknut Antiqua")
+
+val fontInknutAntiqua = FontFamily(
+    Font(googleFont = inknutAntiqua, fontProvider = provider)
+)
 
 // Set of Material typography styles to start with
 val Typography = Typography(
