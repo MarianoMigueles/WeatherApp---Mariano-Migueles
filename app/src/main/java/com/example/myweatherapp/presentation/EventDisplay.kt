@@ -17,7 +17,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.example.myweatherapp.R
+import com.example.myweatherapp.icons.models.IconModel
 import com.example.ui.theme.displayFontFamily
 
 @Composable
@@ -51,19 +51,12 @@ fun EventText(text: String, colorType: String = "default") {
 }
 
 @Composable
-fun EventImage(iconState: String, description: String) {
+fun EventImage(icon: IconModel? = null) {
 
-    val iconResId = when (iconState) {
-        "empty" -> R.drawable.wind
-        "error" -> R.drawable.error
-        "load" -> R.drawable.loading
-        else -> null
-    }
-
-    if (iconResId != null) {
+    if (icon != null) {
         Image(
-            painter = painterResource(id = iconResId),
-            contentDescription = description,
+            painter = painterResource(id = icon.imageVector),
+            contentDescription = icon.description,
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth()
@@ -74,5 +67,6 @@ fun EventImage(iconState: String, description: String) {
     } else {
         Text("Icono no encontrado")
     }
+
 }
 

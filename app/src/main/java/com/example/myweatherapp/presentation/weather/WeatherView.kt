@@ -1,16 +1,14 @@
 package com.example.myweatherapp.presentation.weather
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.myweatherapp.icons.IconManager
 import com.example.myweatherapp.presentation.EventImage
 import com.example.myweatherapp.presentation.EventText
 import com.example.myweatherapp.presentation.EventView
@@ -21,17 +19,11 @@ fun WeatherView(
     state: WeatherState,
     execute: (WeatherIntention) -> Unit
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(20.dp),
-    ) {
-        when(state) {
-            is WeatherState.Loading -> LoadingView()
-            is WeatherState.Error ->  ErrorView(state.message)
-            is WeatherState.Success -> SuccessfulView()
-            is WeatherState.Empty -> EmptyView()
-        }
+    when(state) {
+        is WeatherState.Loading -> LoadingView()
+        is WeatherState.Error ->  ErrorView(state.message)
+        is WeatherState.Success -> SuccessfulView()
+        is WeatherState.Empty -> EmptyView()
     }
 }
 
@@ -43,7 +35,7 @@ fun SuccessfulView() {
 @Composable
 fun EmptyView() {
     EventView {
-        EventImage("empty", "Icono de contenido vacio.")
+        EventImage(IconManager.emptyIcon)
         EventText("¡Se lo llevo el viento!")
         Spacer(modifier = Modifier.height(1.dp))
         EventText("No hay nada aqui")
@@ -53,7 +45,7 @@ fun EmptyView() {
 @Composable
 fun ErrorView(message: String) {
     EventView {
-        EventImage("error", "Icono de error.")
+        EventImage(IconManager.errorIcon)
         EventText("¡Ha ocurrido un error!", "error")
         Spacer(modifier = Modifier.height(1.dp))
         EventText(message, "error")
@@ -63,7 +55,7 @@ fun ErrorView(message: String) {
 @Composable
 fun LoadingView() {
     EventView {
-        EventImage("load", "Icono de contenido cargando.")
+        EventImage(IconManager.loadingIcon)
         EventText("Cargando...")
     }
 }
