@@ -5,10 +5,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.myweatherapp.repository.models.City
 import kotlinx.coroutines.launch
 
 class CityViewModel() : ViewModel() {
-    var state by mutableStateOf<CityState>(CityState.Success(city = City()))
+    var state by mutableStateOf<CityState>(CityState.Success(city = City("Marisport", -34.6105f, -58.3922f, "Argentina", "Buenos Aires")))
 
     fun execute(intention: CityIntention) {
         when(intention) {

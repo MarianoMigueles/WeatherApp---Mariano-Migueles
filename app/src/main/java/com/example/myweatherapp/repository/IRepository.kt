@@ -1,6 +1,6 @@
 package com.example.myweatherapp.repository
 
-import com.example.myweatherapp.presentation.city.City
+import com.example.myweatherapp.repository.models.City
 import com.example.myweatherapp.repository.models.Forecast
 
 interface IRepository {
