@@ -5,14 +5,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.example.compose.AppTheme
-import com.example.myweatherapp.presentation.city.CityPage
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,20 +16,13 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AppTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    CityPage(modifier = Modifier.padding(innerPadding))
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    MainPage()
                 }
             }
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ActivityPreview() {
-    AppTheme {
-        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            CityPage(modifier = Modifier.padding(innerPadding))
         }
     }
 }
