@@ -1,18 +1,25 @@
 package com.example.myweatherapp.presentation.city
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import com.example.myweatherapp.repository.Repository
+import com.example.myweatherapp.router.Router
 
 @Composable
 fun CityPage(
-    modifier: Modifier = Modifier
+    navHostController: NavHostController
 ) {
-    val viewModel : CityViewModel = viewModel<CityViewModel>()
+    val viewModel : CityViewModel = viewModel(
+        factory = CityViewModelFactory(
+            repository = Repository(),
+            navigator = Router(navHostController)
+        )
+    )
     CityView(
-        modifier = Modifier,
         state = viewModel.state,
-    ) {
-        viewModel.execute(it)
-    }
+        execute = { intention ->
+            viewModel.execute(intention)
+        }
+    )
 }

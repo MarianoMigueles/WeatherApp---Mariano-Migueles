@@ -16,17 +16,10 @@ val provider = GoogleFont.Provider(
     certificates = R.array.com_google_android_gms_fonts_certs
 )
 
-val bodyFontFamily = FontFamily(
-    Font(
-        googleFont = GoogleFont("Roboto"),
-        fontProvider = provider,
-    )
-)
-
 val displayFontFamily = FontFamily(
     Font(
         googleFont = GoogleFont("Inknut Antiqua"),
-        fontProvider = provider,
+        fontProvider = provider
     )
 )
 
@@ -34,20 +27,17 @@ val displayFontFamily = FontFamily(
 val baseline = Typography()
 
 val AppTypography = Typography(
-    displayLarge = baseline.displayLarge.copy(fontFamily = displayFontFamily),
-    displayMedium = baseline.displayMedium.copy(fontFamily = displayFontFamily),
-    displaySmall = baseline.displaySmall.copy(fontFamily = displayFontFamily),
-    headlineLarge = baseline.headlineLarge.copy(fontFamily = displayFontFamily),
-    headlineMedium = baseline.headlineMedium.copy(fontFamily = displayFontFamily),
-    headlineSmall = baseline.headlineSmall.copy(fontFamily = displayFontFamily),
-    titleLarge = baseline.titleLarge.copy(fontFamily = displayFontFamily),
-    titleMedium = baseline.titleMedium.copy(fontFamily = displayFontFamily),
-    titleSmall = baseline.titleSmall.copy(fontFamily = displayFontFamily),
-    bodyLarge = baseline.bodyLarge.copy(fontFamily = bodyFontFamily),
-    bodyMedium = baseline.bodyMedium.copy(fontFamily = bodyFontFamily),
-    bodySmall = baseline.bodySmall.copy(fontFamily = bodyFontFamily),
-    labelLarge = baseline.labelLarge.copy(fontFamily = bodyFontFamily),
-    labelMedium = baseline.labelMedium.copy(fontFamily = bodyFontFamily),
-    labelSmall = baseline.labelSmall.copy(fontFamily = bodyFontFamily),
+    displayLarge = baseline.displayLarge.copy(fontFamily = displayFontFamily), // Temperatura grande ("28°") //h1
+    displayMedium = baseline.displayMedium.copy(fontFamily = displayFontFamily), // Unidad de temperatura ("°C") //span
+    headlineLarge = baseline.headlineLarge.copy(fontFamily = displayFontFamily), // Descripción del clima ("Nublado") //h2
+    headlineMedium = baseline.headlineMedium.copy(fontFamily = displayFontFamily), // Nombre de la ciudad ("Ciudad...") //h3
+    titleLarge = baseline.titleLarge.copy(fontFamily = displayFontFamily), // Días de la semana (D, L, M, X, J, V, S) //h4
+    bodyLarge = baseline.bodyLarge.copy(fontFamily = displayFontFamily), // Temperaturas diarias pequeñas en los círculos //span
 )
 
+//displayLarge (h1) para el elemento más destacado, la temperatura.
+//displayMedium (span) para la unidad de temperatura (°C), como texto secundario alineado con el h1.
+//headlineLarge (h2) para la descripción del clima.
+//headlineMedium (h3) para el nombre de la ciudad.
+//titleLarge (h4) para los días de la semana.
+//bodyLarge (span) para las temperaturas diarias pequeñas, sin jerarquía de encabezado, ya que son datos secundarios.

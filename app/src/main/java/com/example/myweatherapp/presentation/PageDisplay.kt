@@ -1,19 +1,20 @@
 package com.example.myweatherapp.presentation
 
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -22,11 +23,11 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.example.compose.AppTheme
 import com.example.myweatherapp.icons.IconManager
 import com.example.myweatherapp.icons.models.IconModel
 import com.example.myweatherapp.icons.models.IconSize
@@ -35,9 +36,10 @@ import com.example.myweatherapp.icons.models.IconSize
 @Composable
 fun PageView(content: @Composable (Modifier) -> Unit) {
     val modifier: Modifier = Modifier
+    val scrollState = rememberScrollState()
 
     Scaffold (
-        modifier
+        modifier = modifier
             .fillMaxSize(),
         {
             TopAppBar(
@@ -57,26 +59,31 @@ fun PageView(content: @Composable (Modifier) -> Unit) {
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.primary
+                    containerColor = Color.Transparent
                 )
             )
         }
     ) { paddingValues ->
-        content(Modifier.padding(paddingValues))
+        Column(
+            modifier
+                .padding(paddingValues)
+                .verticalScroll(scrollState)
+        ) {
+            content(modifier)
+        }
     }
 }
 
 @Composable
 fun GetIcon(icon: IconModel? = null, size: Dp) {
     if (icon != null) {
-        Image(
+        Icon(
             painter = painterResource(id = icon.imageVector),
             contentDescription = icon.description,
-            contentScale = ContentScale.Crop,
             modifier = Modifier
                 .width(size)
-                .aspectRatio(1f)
+                .aspectRatio(1f),
+            tint = MaterialTheme.colorScheme.primary
         )
     } else {
         Text("Icono no encontrado")
@@ -100,7 +107,7 @@ private fun CreateButton(content: @Composable (Modifier) -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun PageViewPreview() {
-    MaterialTheme {
+    AppTheme() {
         PageView {
             Text("Todo mal")
         }

@@ -26,7 +26,7 @@ fun MainPage() {
         }
 
         composable(
-            route = "clima?lat={lat}&lon={lon}&name={name}",
+            route = "weather?lat={lat}&lon={lon}&name={name}",
             arguments = listOf(
                 navArgument("lat") { type = NavType.FloatType },
                 navArgument("lon") { type = NavType.FloatType },
