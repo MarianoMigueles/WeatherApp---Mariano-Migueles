@@ -1,8 +1,11 @@
 package com.example.myweatherapp.repository
 
+
+import android.util.Log
 import com.example.myweatherapp.repository.models.City
-import com.example.myweatherapp.repository.models.Forecast
+import com.example.myweatherapp.repository.models.ForecastDTO
 import com.example.myweatherapp.repository.models.Weather
+
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -15,13 +18,13 @@ import kotlinx.serialization.json.Json
 class Repository : IRepository {
 
     private object Api {
-        val ApiKey = "afa304be5e5e3a942353c511a821be9e"
-        val CityCall = "http://api.openweathermap.org/geo/1.0/direct"
-        val WeatherCall = "https://api.openweathermap.org/data/2.5/weather"
-        val ForecastCall = "https://api.openweathermap.org/data/2.5/forecast"
+        const val APIKEY = "afa304be5e5e3a942353c511a821be9e"
+        const val CITYCALL = "https://api.openweathermap.org/geo/1.0/direct"
+        const val WEATHERCALL = "https://api.openweathermap.org/data/2.5/weather"
+        const val FORECASTCALL = "https://api.openweathermap.org/data/2.5/forecast"
     }
 
-    private val client = HttpClient {
+    private val client = HttpClient() {
         install(ContentNegotiation) {
             json(Json {
                 ignoreUnknownKeys = true
@@ -29,11 +32,11 @@ class Repository : IRepository {
         }
     }
 
-    override suspend fun getCity(ciudad: String): List<City> {
-        val response = client.get(Api.CityCall) {
-            parameter("q", ciudad)
+    override suspend fun getCity(city: String): List<City> {
+        val response = client.get(Api.CITYCALL) {
+            parameter("q", city)
             parameter("limit", 10)
-            parameter("appid", Api.ApiKey)
+            parameter("appid", Api.APIKEY)
         }
 
         validateHttpStatus(response.status)
@@ -42,11 +45,11 @@ class Repository : IRepository {
     }
 
     override suspend fun getWeather(lat: Float, lon: Float): Weather {
-        val response = client.get(Api.WeatherCall) {
+        val response = client.get(Api.WEATHERCALL) {
             parameter("lat", lat)
             parameter("lon", lon)
             parameter("units","metric")
-            parameter("appid", Api.ApiKey)
+            parameter("appid", Api.APIKEY)
         }
 
         validateHttpStatus(response.status)
@@ -54,18 +57,17 @@ class Repository : IRepository {
         return response.body<Weather>()
     }
 
-    override suspend fun getForecast(name: String): List<Forecast> {
-        val response = client.get(Api.ForecastCall) {
+    override suspend fun getForecast(name: String): List<ForecastDTO> {
+        val response = client.get(Api.FORECASTCALL) {
             parameter("q",name)
             parameter("units","metric")
-            parameter("appid",Api.ApiKey)
+            parameter("appid",Api.APIKEY)
         }
 
         validateHttpStatus(response.status)
 
-        return response.body<List<Forecast>>()
+        return response.body<List<ForecastDTO>>()
     }
-
 
     private fun validateHttpStatus(status: HttpStatusCode): Unit {
         if(status != HttpStatusCode.OK) {
