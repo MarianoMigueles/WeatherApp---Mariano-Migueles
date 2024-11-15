@@ -13,7 +13,16 @@ data class ForecastDTO (
 @Serializable
 data class ListForecast(
     val dt: Long,
-    val main: MainForecast
+    val main: MainForecast,
+    val weather: List<WeatherForecast>,
+)
+
+@Serializable
+data class WeatherForecast (
+    val id: Long,
+    val main: String,
+    val description: String,
+    val icon: String
 )
 
 @Serializable
