@@ -4,7 +4,8 @@ package com.example.myweatherapp.repository
 import android.util.Log
 import com.example.myweatherapp.repository.models.City
 import com.example.myweatherapp.repository.models.ForecastDTO
-import com.example.myweatherapp.repository.models.Weather
+import com.example.myweatherapp.repository.models.ListForecast
+import com.example.myweatherapp.repository.models.WeatherDTO
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -44,7 +45,7 @@ class Repository : IRepository {
         return response.body<List<City>>()
     }
 
-    override suspend fun getWeather(lat: Float, lon: Float): Weather {
+    override suspend fun getWeather(lat: Float, lon: Float): WeatherDTO {
         val response = client.get(Api.WEATHERCALL) {
             parameter("lat", lat)
             parameter("lon", lon)
@@ -54,10 +55,10 @@ class Repository : IRepository {
 
         validateHttpStatus(response.status)
 
-        return response.body<Weather>()
+        return response.body<WeatherDTO>()
     }
 
-    override suspend fun getForecast(name: String): List<ForecastDTO> {
+    override suspend fun getForecast(name: String): List<ListForecast> {
         val response = client.get(Api.FORECASTCALL) {
             parameter("q",name)
             parameter("units","metric")
@@ -66,7 +67,9 @@ class Repository : IRepository {
 
         validateHttpStatus(response.status)
 
-        return response.body<List<ForecastDTO>>()
+        Log.d("for", "${response.body<ForecastDTO>().list}")
+
+        return response.body<ForecastDTO>().list.take(7)
     }
 
     private fun validateHttpStatus(status: HttpStatusCode): Unit {
