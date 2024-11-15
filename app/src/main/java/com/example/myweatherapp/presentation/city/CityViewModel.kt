@@ -1,5 +1,6 @@
 package com.example.myweatherapp.presentation.city
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -18,7 +19,7 @@ class CityViewModel(
     private val navigator: Router
 ) : ViewModel() {
     var state by mutableStateOf<CityState>(CityState.Empty)
-    var cities: List<City> = emptyList()
+    private var cities: List<City> = emptyList()
 
     fun execute(intention: CityIntention) {
         when(intention) {
@@ -31,11 +32,11 @@ class CityViewModel(
         state = CityState.Loading
         viewModelScope.launch {
             try {
-                cities = repository.getCity(cityName)
-                if(cities.isEmpty()) {
-                    state = CityState.Empty
+                cities = repository.getCity(cityName) ?: emptyList()
+                state = if(cities.isEmpty()) {
+                    CityState.Empty
                 } else {
-                    state = CityState.Success(cities)
+                    CityState.Success(cities)
                 }
             } catch (exception: Exception) {
                 state = CityState.Error(exception.localizedMessage ?: "Unknown error")
@@ -50,7 +51,7 @@ class CityViewModel(
 }
 
 class CityViewModelFactory(
-    private val repository: Repository,
+    private val repository: IRepository,
     private val navigator: Router
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
