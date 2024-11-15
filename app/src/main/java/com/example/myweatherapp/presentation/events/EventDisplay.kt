@@ -1,7 +1,5 @@
-package com.example.myweatherapp.presentation
+package com.example.myweatherapp.presentation.events
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
@@ -57,7 +55,7 @@ fun EventImage(icon: IconModel? = null) {
             painter = painterResource(id = icon.imageVector),
             contentDescription = icon.description,
             modifier = Modifier
-                .padding(16.dp)
+                .padding(25.dp)
                 .fillMaxWidth()
                 .aspectRatio(1f)
                 .alpha(0.9f),

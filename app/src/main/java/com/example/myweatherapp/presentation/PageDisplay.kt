@@ -67,6 +67,8 @@ fun PageView(content: @Composable (Modifier) -> Unit) {
         Column(
             modifier
                 .padding(paddingValues)
+                .padding(top = 15.dp)
+                .padding(horizontal = 25.dp)
                 .verticalScroll(scrollState)
         ) {
             content(modifier)
