@@ -1,6 +1,5 @@
 package com.example.myweatherapp.presentation
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,6 +22,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -31,10 +31,12 @@ import com.example.compose.AppTheme
 import com.example.myweatherapp.icons.IconManager
 import com.example.myweatherapp.icons.models.IconModel
 import com.example.myweatherapp.icons.models.IconSize
+import com.example.myweatherapp.repository.models.Weather
+import com.example.myweatherapp.repository.models.WeatherDTO
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PageView(content: @Composable (Modifier) -> Unit) {
+fun <T> PageView(model: T? = null ,content: @Composable (Modifier) -> Unit) {
     val modifier: Modifier = Modifier
     val scrollState = rememberScrollState()
 
@@ -50,10 +52,10 @@ fun PageView(content: @Composable (Modifier) -> Unit) {
                             .padding(horizontal = 10.dp),
                         horizontalArrangement = Arrangement.End
                     ) {
-                        CreateButton {
-                            GetIcon(IconManager.shareIcon, IconSize.extraSmall)
+                        if(model != null && model is WeatherDTO) {
+                            CreateShareButton(model)
                         }
-                        CreateButton {
+                        CreateButton(action = {  }) {
                             GetIcon(IconManager.settingsIcon, IconSize.extraSmall)
                         }
                     }
@@ -77,6 +79,15 @@ fun PageView(content: @Composable (Modifier) -> Unit) {
 }
 
 @Composable
+private fun CreateShareButton(weather: WeatherDTO) {
+    val context = LocalContext.current
+    val shareManager = ShareManager(context)
+    CreateButton(action = { shareManager.shareWeatherStats(weather) }) {
+        GetIcon(IconManager.shareIcon, IconSize.extraSmall)
+    }
+}
+
+@Composable
 fun GetIcon(icon: IconModel? = null, size: Dp) {
     if (icon != null) {
         Icon(
@@ -93,9 +104,9 @@ fun GetIcon(icon: IconModel? = null, size: Dp) {
 }
 
 @Composable
-private fun CreateButton(content: @Composable (Modifier) -> Unit) {
+private fun CreateButton(action: () -> Unit, content: @Composable () -> Unit) {
     Button(
-        onClick = {TODO()},
+        onClick = {action()},
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Transparent,
             contentColor = MaterialTheme.colorScheme.primary
@@ -103,14 +114,14 @@ private fun CreateButton(content: @Composable (Modifier) -> Unit) {
         modifier = Modifier
             .padding(end = 8.dp)
     )
-    { content(Modifier) }
+    { content() }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun PageViewPreview() {
     AppTheme() {
-        PageView {
+        PageView<WeatherDTO> {
             Text("Todo mal")
         }
     }
