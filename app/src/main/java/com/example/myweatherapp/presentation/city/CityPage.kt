@@ -3,8 +3,9 @@ package com.example.myweatherapp.presentation.city
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.example.myweatherapp.repository.MockRepository
+import com.example.myweatherapp.presentation.PageView
 import com.example.myweatherapp.repository.Repository
+import com.example.myweatherapp.repository.models.City
 import com.example.myweatherapp.router.Router
 
 @Composable
@@ -17,10 +18,13 @@ fun CityPage(
             navigator = Router(navHostController)
         )
     )
-    CityView(
-        state = viewModel.state,
-        execute = { intention ->
-            viewModel.execute(intention)
-        }
-    )
+
+    PageView<City> {
+        CityView(
+            state = viewModel.state,
+            execute = { intention ->
+                viewModel.execute(intention)
+            }
+        )
+    }
 }

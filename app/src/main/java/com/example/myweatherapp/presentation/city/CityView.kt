@@ -42,25 +42,24 @@ fun CityView(
 ) {
     var input by remember { mutableStateOf("") }
 
-    PageView {
-        TextField(
-            value = input,
-            label = { Text("Texto") },
-            modifier = Modifier.fillMaxWidth(),
-            onValueChange = {
-                input = it
-                execute(CityIntention.Search(it))
-            }
-        )
-        when(state) {
-            is CityState.Loading -> LoadingView()
-            is CityState.Error ->  ErrorView(state.message)
-            is CityState.Success -> LoadCityList(state.cities) {
-                execute(CityIntention.Select(it))
-            }
-            is CityState.Empty -> EmptyView()
+    TextField(
+        value = input,
+        label = { Text("Texto") },
+        modifier = Modifier.fillMaxWidth(),
+        onValueChange = {
+            input = it
+            execute(CityIntention.Search(it))
         }
+    )
+    when(state) {
+        is CityState.Loading -> LoadingView()
+        is CityState.Error ->  ErrorView(state.message)
+        is CityState.Success -> LoadCityList(state.cities) {
+            execute(CityIntention.Select(it))
+        }
+        is CityState.Empty -> EmptyView()
     }
+
 }
 
 @Composable
