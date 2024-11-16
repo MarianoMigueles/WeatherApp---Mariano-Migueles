@@ -1,6 +1,8 @@
 package com.example.ui.theme
 
 import androidx.compose.material3.Typography
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -26,14 +28,120 @@ val displayFontFamily = FontFamily(
 // Default Material 3 typography values
 val baseline = Typography()
 
-val AppTypography = Typography(
-    displayLarge = baseline.displayLarge.copy(fontFamily = displayFontFamily), // Temperatura grande ("28°") //h1
-    displayMedium = baseline.displayMedium.copy(fontFamily = displayFontFamily), // Unidad de temperatura ("°C") //span
-    headlineLarge = baseline.headlineLarge.copy(fontFamily = displayFontFamily), // Descripción del clima ("Nublado") //h2
-    headlineMedium = baseline.headlineMedium.copy(fontFamily = displayFontFamily), // Nombre de la ciudad ("Ciudad...") //h3
-    titleLarge = baseline.titleLarge.copy(fontFamily = displayFontFamily), // Días de la semana (D, L, M, X, J, V, S) //h4
-    bodyLarge = baseline.bodyLarge.copy(fontFamily = displayFontFamily), // Temperaturas diarias pequeñas en los círculos //span
-)
+enum class WindowSize { Compact, Medium, Expanded }
+
+@Composable
+fun getWindowSize(): WindowSize {
+    val configuration = LocalConfiguration.current
+    return when {
+        configuration.screenWidthDp < 600 -> WindowSize.Compact
+        configuration.screenWidthDp < 840 -> WindowSize.Medium
+        else -> WindowSize.Expanded
+    }
+}
+
+@Composable
+fun AppTypography(windowSize: WindowSize): Typography {
+    return when (windowSize) {
+        WindowSize.Compact -> Typography(
+            displayLarge = TextStyle(
+                fontFamily = displayFontFamily,
+                fontSize = 50.sp,
+                lineHeight = 60.sp
+            ),
+            displayMedium = TextStyle(
+                fontFamily = displayFontFamily,
+                fontSize = 38.sp,
+                lineHeight = 48.sp
+            ),
+            headlineLarge = TextStyle(
+                fontFamily = displayFontFamily,
+                fontSize = 30.sp,
+                lineHeight = 36.sp
+            ),
+            headlineMedium = TextStyle(
+                fontFamily = displayFontFamily,
+                fontSize = 26.sp,
+                lineHeight = 32.sp
+            ),
+            titleLarge = TextStyle(
+                fontFamily = displayFontFamily,
+                fontSize = 20.sp,
+                lineHeight = 24.sp
+            ),
+            bodyLarge = TextStyle(
+                fontFamily = displayFontFamily,
+                fontSize = 17.sp,
+                lineHeight = 22.sp
+            )
+        )
+        WindowSize.Medium -> Typography(
+            displayLarge = TextStyle(
+                fontFamily = displayFontFamily,
+                fontSize = 60.sp,
+                lineHeight = 72.sp
+            ),
+            displayMedium = TextStyle(
+                fontFamily = displayFontFamily,
+                fontSize = 45.sp,
+                lineHeight = 56.sp
+            ),
+            headlineLarge = TextStyle(
+                fontFamily = displayFontFamily,
+                fontSize = 38.sp,
+                lineHeight = 48.sp
+            ),
+            headlineMedium = TextStyle(
+                fontFamily = displayFontFamily,
+                fontSize = 30.sp,
+                lineHeight = 36.sp
+            ),
+            titleLarge = TextStyle(
+                fontFamily = displayFontFamily,
+                fontSize = 23.sp,
+                lineHeight = 28.sp
+            ),
+            bodyLarge = TextStyle(
+                fontFamily = displayFontFamily,
+                fontSize = 19.sp,
+                lineHeight = 24.sp
+            )
+        )
+        WindowSize.Expanded -> Typography(
+            displayLarge = TextStyle(
+                fontFamily = displayFontFamily,
+                fontSize = 68.sp,
+                lineHeight = 80.sp
+            ),
+            displayMedium = TextStyle(
+                fontFamily = displayFontFamily,
+                fontSize = 53.sp,
+                lineHeight = 64.sp
+            ),
+            headlineLarge = TextStyle(
+                fontFamily = displayFontFamily,
+                fontSize = 44.sp,
+                lineHeight = 56.sp
+            ),
+            headlineMedium = TextStyle(
+                fontFamily = displayFontFamily,
+                fontSize = 36.sp,
+                lineHeight = 44.sp
+            ),
+            titleLarge = TextStyle(
+                fontFamily = displayFontFamily,
+                fontSize = 28.sp,
+                lineHeight = 36.sp
+            ),
+            bodyLarge = TextStyle(
+                fontFamily = displayFontFamily,
+                fontSize = 23.sp,
+                lineHeight = 28.sp
+            )
+        )
+    }
+}
+
 
 //displayLarge (h1) para el elemento más destacado, la temperatura.
 //displayMedium (span) para la unidad de temperatura (°C), como texto secundario alineado con el h1.

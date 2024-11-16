@@ -5,6 +5,7 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import com.example.ui.theme.AppTypography
+import com.example.ui.theme.getWindowSize
 
 private val lightScheme = lightColorScheme(
     primary = primaryLight,
@@ -30,9 +31,11 @@ fun AppTheme(
       else -> lightScheme
   }
 
+    val windowSize = getWindowSize()
+
   MaterialTheme(
     colorScheme = colorScheme,
-    typography = AppTypography,
+    typography = AppTypography(windowSize),
     content = content
   )
 }
