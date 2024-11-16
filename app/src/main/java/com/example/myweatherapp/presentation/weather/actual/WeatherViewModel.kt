@@ -1,4 +1,4 @@
-package com.example.myweatherapp.presentation.weather
+package com.example.myweatherapp.presentation.weather.actual
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -7,7 +7,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.myweatherapp.repository.IRepository
+import com.example.myweatherapp.repository.models.WeatherDTO
 import com.example.myweatherapp.router.Router
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class WeatherViewModel(
@@ -18,6 +21,8 @@ class WeatherViewModel(
     val name: String
 ) : ViewModel() {
     var state by mutableStateOf<WeatherState>(WeatherState.Empty)
+    private val _weather = MutableStateFlow<WeatherDTO>(WeatherDTO())
+    val weather: StateFlow<WeatherDTO> get() = _weather
 
     fun execute(intention: WeatherIntention) {
         when(intention) {
@@ -31,6 +36,7 @@ class WeatherViewModel(
         viewModelScope.launch {
             try {
                 val weather = repository.getWeather(lat = lat, lon = lon)
+                _weather.value = weather
                 state = WeatherState.Success(weather)
             } catch (exception: Exception) {
                 state = WeatherState.Error(exception.localizedMessage ?: "Unknown error")
