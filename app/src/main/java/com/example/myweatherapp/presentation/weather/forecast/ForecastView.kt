@@ -1,5 +1,6 @@
 package com.example.myweatherapp.presentation.weather.forecast
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -62,25 +63,23 @@ fun SuccessfulView(forecast: List<ListForecast>) {
             .padding(10.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        forecast.forEach { item ->
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                val days = 7
-                for (i in 1..days) {
-                    DayWeatherInfo("x", item.main.temp_max.toString(), item.main.temp_min.toString(), IconManager.windIcon)
-                }
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceAround
+        ) {
+            forecast.forEach { item ->
+                DayWeatherInfo("x", item.main.temp_max.toString(),
+                    item.main.temp_min.toString(), IconManager.windIcon)
             }
-            Spacer(Modifier.height(15.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                val boxes = 3
-                for (i in 1..boxes) {
-                    WeatherStats("x", IconManager.windIcon)
-                }
+        }
+        Spacer(Modifier.height(15.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceAround
+        ) {
+            val boxes = 3
+            for (i in 1..boxes) {
+                WeatherStats("x", IconManager.windIcon)
             }
         }
     }
