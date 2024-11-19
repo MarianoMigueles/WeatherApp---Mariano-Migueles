@@ -1,6 +1,5 @@
 package com.example.myweatherapp.presentation.city
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -8,15 +7,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.myweatherapp.repository.IRepository
-import com.example.myweatherapp.repository.Repository
 import com.example.myweatherapp.repository.models.City
+import com.example.myweatherapp.router.IRouter
 import com.example.myweatherapp.router.NavTarget
-import com.example.myweatherapp.router.Router
 import kotlinx.coroutines.launch
 
 class CityViewModel(
     val repository: IRepository,
-    private val navigator: Router
+    private val navigator: IRouter
 ) : ViewModel() {
     var state by mutableStateOf<CityState>(CityState.Empty)
     private var cities: List<City> = emptyList()
@@ -52,7 +50,7 @@ class CityViewModel(
 
 class CityViewModelFactory(
     private val repository: IRepository,
-    private val navigator: Router
+    private val navigator: IRouter
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
