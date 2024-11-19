@@ -1,7 +1,12 @@
 package com.example.myweatherapp.repository
 
 
-import android.util.Log
+import android.media.Image
+import android.os.Build
+import androidx.annotation.RequiresApi
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import com.example.myweatherapp.repository.models.City
 import com.example.myweatherapp.repository.models.ForecastDTO
 import com.example.myweatherapp.repository.models.ListForecast
@@ -58,6 +63,7 @@ class Repository : IRepository {
         return response.body<WeatherDTO>()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun getForecast(name: String): List<ListForecast> {
         val response = client.get(Api.FORECASTCALL) {
             parameter("q",name)
@@ -67,15 +73,32 @@ class Repository : IRepository {
 
         validateHttpStatus(response.status)
 
-        Log.d("for", "${response.body<ForecastDTO>().list}")
+        return getDailyForecast(response.body<ForecastDTO>().list)
 
-        return response.body<ForecastDTO>().list.take(7)
     }
 
     private fun validateHttpStatus(status: HttpStatusCode): Unit {
         if(status != HttpStatusCode.OK) {
             throw Exception()
         }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun getDailyForecast(forecastList: List<ListForecast>): List<ListForecast> {
+        val today = LocalDate.now()
+
+        return forecastList
+            .filter { entry ->
+                val entryDate = LocalDateTime.parse(entry.dt_txt, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).toLocalDate()
+                !entryDate.isBefore(today)
+            }
+            .groupBy { entry ->
+                LocalDateTime.parse(entry.dt_txt, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).toLocalDate()
+            }
+            .map { (_, entriesForDay) ->
+                entriesForDay.find { it.dt_txt.contains("12:00:00") } ?: entriesForDay.first()
+            }
+            .take(6)
     }
 
 }

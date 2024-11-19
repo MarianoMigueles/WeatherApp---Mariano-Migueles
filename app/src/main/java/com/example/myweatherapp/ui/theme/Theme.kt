@@ -11,14 +11,16 @@ private val lightScheme = lightColorScheme(
     primary = primaryLight,
     secondary = secondaryLight,
     error = errorLight,
-    background = backgroundLight
+    background = backgroundLight,
+    onBackground = onBackgroundCardLight
 )
 
 private val darkScheme = darkColorScheme(
     primary = primaryDark,
     secondary = secondaryDark,
     error = errorDark,
-    background = backgroundDark
+    background = backgroundDark,
+    onBackground = onBackgroundCardDark
 )
 
 @Composable

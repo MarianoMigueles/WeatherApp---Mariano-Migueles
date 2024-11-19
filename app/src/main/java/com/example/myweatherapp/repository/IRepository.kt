@@ -1,5 +1,6 @@
 package com.example.myweatherapp.repository
 
+import android.media.Image
 import com.example.myweatherapp.repository.models.City
 import com.example.myweatherapp.repository.models.ListForecast
 import com.example.myweatherapp.repository.models.WeatherDTO

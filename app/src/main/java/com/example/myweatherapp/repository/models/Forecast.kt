@@ -15,6 +15,7 @@ data class ListForecast(
     val dt: Long,
     val main: MainForecast,
     val weather: List<WeatherForecast>,
+    val dt_txt: String
 )
 
 @Serializable

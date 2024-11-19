@@ -44,7 +44,7 @@ class CityViewModel(
         }
     }
 
-    private  fun selectCity(city: City) {
+    private fun selectCity(city: City) {
         val route = NavTarget.Weather(city.lat, city.lon, city.name)
         navigator.navigate(route)
     }

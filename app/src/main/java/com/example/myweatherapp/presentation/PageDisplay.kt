@@ -10,33 +10,34 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DisplayMode
+import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.compose.AppTheme
-import com.example.myweatherapp.icons.IconManager
 import com.example.myweatherapp.icons.models.IconModel
-import com.example.myweatherapp.icons.models.IconSize
-import com.example.myweatherapp.repository.models.Weather
-import com.example.myweatherapp.repository.models.WeatherDTO
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun <T> PageView(model: T? = null ,content: @Composable (Modifier) -> Unit) {
+fun PageView(topBarContent: @Composable (Modifier) -> Unit = {} ,content: @Composable (Modifier) -> Unit) {
     val modifier: Modifier = Modifier
     val scrollState = rememberScrollState()
 
@@ -52,12 +53,7 @@ fun <T> PageView(model: T? = null ,content: @Composable (Modifier) -> Unit) {
                             .padding(horizontal = 10.dp),
                         horizontalArrangement = Arrangement.End
                     ) {
-                        if(model != null && model is WeatherDTO) {
-                            CreateShareButton(model)
-                        }
-                        CreateButton(action = {  }) {
-                            GetIcon(IconManager.settingsIcon, IconSize.extraSmall)
-                        }
+                        topBarContent(Modifier)
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -79,49 +75,39 @@ fun <T> PageView(model: T? = null ,content: @Composable (Modifier) -> Unit) {
 }
 
 @Composable
-private fun CreateShareButton(weather: WeatherDTO) {
-    val context = LocalContext.current
-    val shareManager = ShareManager(context)
-    CreateButton(action = { shareManager.shareWeatherStats(weather) }) {
-        GetIcon(IconManager.shareIcon, IconSize.extraSmall)
-    }
-}
-
-@Composable
-fun GetIcon(icon: IconModel? = null, size: Dp) {
-    if (icon != null) {
-        Icon(
-            painter = painterResource(id = icon.imageVector),
-            contentDescription = icon.description,
-            modifier = Modifier
-                .width(size)
-                .aspectRatio(1f),
-            tint = MaterialTheme.colorScheme.primary
-        )
-    } else {
-        Text("Icono no encontrado")
-    }
-}
-
-@Composable
-private fun CreateButton(action: () -> Unit, content: @Composable () -> Unit) {
-    Button(
-        onClick = {action()},
-        colors = ButtonDefaults.buttonColors(
-            containerColor = Color.Transparent,
-            contentColor = MaterialTheme.colorScheme.primary
-        ),
+fun DisplayIcon(icon: IconModel, size: Dp, color: Color = Color.Unspecified) {
+    Icon(
+        painter = painterResource(id = icon.imageVector),
+        contentDescription = icon.description,
         modifier = Modifier
-            .padding(end = 8.dp)
+            .width(size)
+            .aspectRatio(1f),
+        tint = color
     )
-    { content() }
+}
+
+@Composable
+fun CreateButton(action: () -> Unit, content: @Composable () -> Unit) {
+    IconButton (
+        modifier = Modifier
+            .padding(end = 8.dp),
+        onClick = {action()},
+        colors = IconButtonColors(
+            containerColor = Color.Transparent,
+            contentColor = MaterialTheme.colorScheme.primary,
+            disabledContainerColor = Color.Transparent,
+            disabledContentColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.38f)
+        ),
+    ) {
+        content()
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun PageViewPreview() {
     AppTheme() {
-        PageView<WeatherDTO> {
+        PageView{
             Text("Todo mal")
         }
     }

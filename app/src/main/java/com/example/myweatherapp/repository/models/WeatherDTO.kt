@@ -10,6 +10,7 @@ data class WeatherDTO(
     val weather: List<Weather> = emptyList(),
     val main: Main = Main(0.0, 0.0, 0.0, 0.0, 0, 0),
     val wind: Wind = Wind(0.0, 0),
+    val rain: Rain = Rain(0.0),
     val clouds: Clouds = Clouds(0)
 )
 
@@ -45,6 +46,14 @@ data class Wind(
 )
 
 @Serializable
+data class Rain(
+    val rain: Double = 0.0
+)
+
+@Serializable
 data class Clouds(
     val all: Long,
 )
+
+
+

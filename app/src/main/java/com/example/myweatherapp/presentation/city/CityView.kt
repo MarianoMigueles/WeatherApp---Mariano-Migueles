@@ -48,7 +48,9 @@ fun CityView(
         modifier = Modifier.fillMaxWidth(),
         onValueChange = {
             input = it
-            execute(CityIntention.Search(it))
+            if(input.isNotEmpty()) {
+                execute(CityIntention.Search(it))
+            }
         }
     )
     when(state) {

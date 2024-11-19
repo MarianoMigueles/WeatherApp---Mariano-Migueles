@@ -13,7 +13,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import com.example.myweatherapp.icons.models.IconModel
 import com.example.ui.theme.displayFontFamily
@@ -31,24 +34,18 @@ fun EventView(content: @Composable () -> Unit) {
 }
 
 @Composable
-fun EventText(text: String, colorType: String = "default") {
-
-    val colorScheme = when(colorType) {
-        "error" -> MaterialTheme.colorScheme.error
-        else -> MaterialTheme.colorScheme.primary
-    }
-
+fun EventText(text: String,size: TextUnit = MaterialTheme.typography.headlineSmall.fontSize, colorType: Color? = null) {
     Text(
         text,
-        color = colorScheme,
+        color = colorType ?: MaterialTheme.colorScheme.primary,
         fontFamily = displayFontFamily,
-        fontSize = MaterialTheme.typography.headlineSmall.fontSize,
+        fontSize = size,
         fontWeight = MaterialTheme.typography.headlineLarge.fontWeight
     )
 }
 
 @Composable
-fun EventImage(icon: IconModel? = null) {
+fun EventImage(icon: IconModel? = null, color: Color? = null) {
 
     if (icon != null) {
         Icon(
@@ -57,9 +54,9 @@ fun EventImage(icon: IconModel? = null) {
             modifier = Modifier
                 .padding(25.dp)
                 .fillMaxWidth()
-                .aspectRatio(1f)
+                .aspectRatio(1.5f)
                 .alpha(0.9f),
-            tint = MaterialTheme.colorScheme.primary
+            tint = color ?: MaterialTheme.colorScheme.primary
         )
     } else {
         Text("Icono no encontrado")

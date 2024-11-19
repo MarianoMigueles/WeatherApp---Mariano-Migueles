@@ -1,5 +1,7 @@
 package com.example.myweatherapp
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -10,6 +12,7 @@ import com.example.myweatherapp.presentation.city.CityPage
 import com.example.myweatherapp.presentation.weather.WeatherPage
 import com.example.myweatherapp.router.NavTarget
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MainPage() {
     val navHostController = rememberNavController()
